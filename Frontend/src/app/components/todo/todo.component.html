@@ -1,0 +1,61 @@
+<div class="max-w-2xl mx-auto p-4">
+    <h1 class="text-2xl font-bold text-center mb-6">Todo List</h1>
+    
+    <form (submit)="submitTodo()" class="flex mb-6">
+      <input 
+        type="text" 
+        [ngModel]="currentTodo" 
+        (ngModelChange)="currentTodo = $event" 
+        [ngModelOptions]="{standalone: true}" 
+        placeholder="Add a new task..." 
+        class="flex-1 px-4 py-2 border rounded-l focus:outline-none focus:ring-1 focus:ring-blue-500"
+      />
+      <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-r hover:bg-blue-600">
+        {{ isEditing ? 'Update' : 'Add' }}
+      </button>
+      @if (isEditing) {
+        <button 
+          type="button" 
+          (click)="cancelEditing()" 
+          class="px-4 py-2 bg-gray-500 text-white rounded-r ml-2 hover:bg-gray-600"
+        >
+          Cancel
+        </button>
+      }
+    </form>
+
+    
+    <ul class="divide-y divide-gray-200">
+      @if (todos.length === 0) {
+        <li class="text-center py-4 text-gray-500">No todos yet. Add one above!</li>
+      } @else {
+        @for (todo of todos; track todo._id) {
+          <li class="py-3">
+            <div class="flex items-center">
+              <input 
+                type="checkbox" 
+                [checked]="todo.completed" 
+                (change)="toggleComplete(todo)"
+                class="h-4 w-4 text-blue-600 rounded mr-3"
+              />
+              <span class="flex-1 mr-2" [class.line-through]="todo.completed" [class.text-gray-500]="todo.completed">
+                {{ todo.title }}
+              </span>
+              <button 
+                (click)="startEditing(todo)" 
+                class="p-1 text-blue-600 hover:text-blue-800 mr-1"
+              >
+                Edit
+              </button>
+              <button 
+                (click)="confirmDelete(todo._id)" 
+                class="p-1 text-red-600 hover:text-red-800"
+              >
+                Delete
+              </button>
+            </div>
+          </li>
+        }
+      }
+    </ul>
+  </div>
