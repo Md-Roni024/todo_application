@@ -75,7 +75,7 @@ export class TodoComponent implements OnInit, OnDestroy {
   }
 
   toggleComplete(todo: Todo) {
-    this.todoService.updateTodo(todo._id, !todo.completed).subscribe({
+    this.todoService.updateTodoStatus(todo._id, !todo.completed).subscribe({
       error: (error) => {
         console.error('Error updating todo:', error);
       }

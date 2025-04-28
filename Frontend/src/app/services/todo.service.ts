@@ -39,7 +39,7 @@ export class TodoService {
     );
   }
 
-  updateTodo(id: string, completed: boolean) {
+  updateTodoStatus(id: string, completed: boolean) {
     return this.http.put(`${this.apiUrl}/${id}`, { completed }).pipe(
       tap(() => this.loadTodos())
     );
